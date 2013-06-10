@@ -24,13 +24,17 @@ are used and demonstrated.
 Features:
  
 	. 8 bit integer FFT
-	. 32 samples at 500Hz separation
+	. 32 samples at 250Hz separation
 	. shows 16 amplitudes of 250Hz, 500Hz, 750Hz,....... 5.75Khz, 6.75Khz, 7.75Khz non-linear
 	. partial logarithm map to show amplitudes, limited as resolution has been reduced for 8 bit FFT
 	. LM358 two stage mic pre-amp at 100x 100x gain (can be improve vastly w/ better op-amps)
 	. utilize Educational BoosterPack; mic for input, potentiometer for pre-amp biasing
 	. draws power from launchpad
 	. square signal generator from TA0.1 toggling, good for initial testing
+	. TA0.1 ouput to P1.6 (io) or P2.6 (buzzer)
+	. P1.3 button used to cycle thru 1. no ouput, 2. P1.6 signal, 3. P2.6 buzzer
+	* in mode 2 and 3, both band and amplitude scales are linear
+	* in mode 3, signals are distorted after passing buzzer and condensor mic, especially in low frequency
 
 
           TI LaunchPad + Educational BoosterPack
@@ -135,6 +139,7 @@ void main(void) {
 	BCSCTL1 = CALBC1_16MHZ;			// 16MHz clock
 	DCOCTL = CALDCO_16MHZ;
 
+	P1SEL = P2SEL = 0;
 	P1DIR = P2DIR = 0;
 	P1OUT = P2OUT = 0;
 
@@ -157,8 +162,8 @@ void main(void) {
 	TA0CTL = TASSEL_2 + MC_2 + TAIE;	// smclk, continous mode
 	TA0CCTL1 = OUTMOD_4 + CCIE;			// we want pin-toggle, 2 times slower
 	TA0CCR1 = play_at;
-	P1DIR |= BIT6;
-	P1SEL |= BIT6;
+	P1DIR |= BIT6;		// prepare both T0.1
+	P2DIR |= BIT6;
 	_BIS_SR(GIE); 						// now
 
 	const uint8_t lcd_init[] = { 0x30, 0x30, 0x39, 0x14, 0x56, 0x6d, 0x70, 0x0c, 0x06, 0x01, 0x00, };
@@ -299,7 +304,21 @@ void main(void) {
 		}//if
 		if (!(P1IN&BIT3)) {
 			while (!(P1IN&BIT3)) asm("nop");
-			gen_tone ^= 1;
+			play_at = 0;
+			P1SEL &= ~BIT6;
+			P2SEL &= ~BIT6;
+			gen_tone++;
+			switch (gen_tone) {
+				case 1:
+					P1SEL |= BIT6;	// pin toggle on
+					break;
+				case 2:
+					P2SEL |= BIT6;	// buzzer on
+					break;
+				default:
+					gen_tone = 0;
+					break;
+			}//switch
 		}//while
 		//__delay_cycles(100000);		// personal taste
 	}//while

@@ -23,6 +23,10 @@ Features:
 	. utilize Educational BoosterPack; mic for input, potentiometer for pre-amp biasing
 	. draws power from launchpad
 	. square signal generator from TA0.1 toggling, good for initial testing
+	. TA0.1 ouput to P1.6 (io) or P2.6 (buzzer)
+	. P1.3 button used to cycle thru 1. no ouput, 2. P1.6 signal, 3. P2.6 buzzer
+	* in mode 2 and 3, both band and amplitude scales are linear
+	* in mode 3, signals are distorted after passing buzzer and condensor mic, especially in low frequency
 
 
           TI LaunchPad + Educational BoosterPack
@@ -38,26 +42,26 @@ Features:
 
 	. LM358 Dual Op-Amp, GBW @0.7Mhz, each stage @x100 gain, bandwidth is 7Khz
 
-                     +------------------------------+
-				    _|-                             |
-                    ___ 10uF                        |
-                   + |   ---------------            |
-                     +-1|----.       Vcc|8          |
-                     |. |    ^      .---|7--+-------|-----o (A)
-                100k| | |   / \     ^   |   |.      |.
-                    |_| |  /__+\   / \  |  | |100k | |1k
-       0.1u          |  |   | |   /__+\ |  |_|     |_|
- (B) o--||--[ 1k  ]--+-2|---+ |    | |  |   |       |
- (C) o-------------+---3|-----+    +-|--|6--+-------+
-                   |   4|Gnd         +--|5----+
-                   |     ---------------      |
-                   |                          |
-                   +--------------------------+
+                        +------------------------------+
+                       _|.                             |
+                       ___ 10uF                        |
+                      + |   ---------------            |
+                        +-1|----.       Vcc|8          |
+                        |. |    ^      .---|7--+-------|-----o (A)
+                   100k| | |   / \     ^   |   |.      |.
+                       |_| |  /__+\   / \  |  | |100k | |1k
+          0.1u          |  |   | |   /__+\ |  |_|     |_|
+    (B) o--||--[ 1k  ]--+-2|---+ |    | |  |   |       |
+    (C) o-------------+---3|-----+    +-|--|6--+-------+
+                      |   4|Gnd         +--|5----+
+                      |     ---------------      |
+                      |                          |
+                      +--------------------------+
 
-  (A) to P1.4 EduBoost Mic jumper middle pin
-  (B) to Condenser Mic, EduBoost Mic Jumper top pin 
-  (C) to Potentiometer, EduBooster Potentiometer Jumper top pin
-  (+) connect Gnd + Vcc to Launchpad
+    (A) to P1.4 EduBoost Mic jumper middle pin
+    (B) to Condenser Mic, EduBoost Mic Jumper top pin 
+    (C) to Potentiometer, EduBooster Potentiometer Jumper top pin
+    (+) connect Gnd + Vcc to Launchpad
  
 
  Chris Chung June 2013
