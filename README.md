@@ -36,11 +36,10 @@ Features:
         |           P1.6|--> TA0.1
 
 
-
-   LM358 Dual Op-Amp, GBW @0.7Mhz, each stage @x100 gain, bandwidth is 7Khz
+	. LM358 Dual Op-Amp, GBW @0.7Mhz, each stage @x100 gain, bandwidth is 7Khz
 
                      +------------------------------+
-                    _|_                             |
+				    _|-                             |
                     ___ 10uF                        |
                    + |   ---------------            |
                      +-1|----.       Vcc|8          |
@@ -58,7 +57,7 @@ Features:
   (A) to P1.4 EduBoost Mic jumper middle pin
   (B) to Condenser Mic, EduBoost Mic Jumper top pin 
   (C) to Potentiometer, EduBooster Potentiometer Jumper top pin
-  (*) connect Gnd + Vcc to Launchpad
+  (+) connect Gnd + Vcc to Launchpad
  
 
  Chris Chung June 2013
